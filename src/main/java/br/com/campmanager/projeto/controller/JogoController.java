@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller; // Import correto para web
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@Controller // Mudou de RestController para Controller
+@Controller 
 @RequestMapping("/jogos")
 public class JogoController {
 

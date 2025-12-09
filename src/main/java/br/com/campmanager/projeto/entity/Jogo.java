@@ -16,7 +16,7 @@ public class Jogo {
     private String desenvolvedora;
     private String modoPadrao;
     
-	public Jogo(Long idJogo, String nome, String desenvolvedora, String modoPadrao) {
+	public Jogo() {
 		this.idJogo = idJogo;
 		this.nome = nome;
 		this.desenvolvedora = desenvolvedora;
