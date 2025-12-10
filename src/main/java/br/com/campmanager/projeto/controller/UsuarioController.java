@@ -24,4 +24,5 @@ public class UsuarioController {
     public Usuario criar(@RequestBody Usuario usuario) {
         return repository.save(usuario);
     }
+    
 }
