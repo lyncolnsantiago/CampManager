@@ -5,10 +5,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.campmanager.projeto.dto.CriarEquipeRequest;
 import br.com.campmanager.projeto.entity.Equipe;
+import br.com.campmanager.projeto.entity.Usuario;
 import br.com.campmanager.projeto.repositories.EquipeRepository;
 import br.com.campmanager.projeto.repositories.UsuarioRepository;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 public class EquipeService {
@@ -34,12 +36,12 @@ public class EquipeService {
     public Equipe criarNovaEquipe(CriarEquipeRequest request, Long capitaoId) throws Exception {
 
         // 1. Validar unicidade do Nome
-        if (equipeRepository.findByNome(request.getNomeEquipe()).isPresent()) {
+        if (equipeRepository.findByNomeEquipe(request.getNomeEquipe()).isPresent()) {
             throw new Exception("Nome de equipe já está em uso.");
         }
 
         // 2. Validar unicidade da Tag
-        if (equipeRepository.findByTag(request.getTagGuilda()).isPresent()) {
+        if (equipeRepository.findByTagGuilda(request.getTagGuilda()).isPresent()) {
             throw new Exception("TAG de guilda já está em uso.");
         }
 
@@ -65,9 +67,75 @@ public class EquipeService {
         return equipeSalva;
     }
 
-    // Você pode adicionar mais métodos aqui no futuro:
-    // - adicionarMembro(Equipe equipe, Usuario membro)
-    // - removerMembro(Usuario membro)
-    // - buscarEquipePorUsuario(Long usuarioId)
-    // - etc.
+    public void enviarConvite(Long capitaoId, String nicknameConvidado) throws Exception {
+        // 1. Validar se quem está convidando é realmente o Capitão
+        Usuario capitao = usuarioRepository.findById(capitaoId)
+                .orElseThrow(() -> new Exception("Capitão não encontrado."));
+        
+        if (capitao.getEquipe() == null) {
+            throw new Exception("Você não possui uma equipe para convidar alguém.");
+        }
+
+        if (!capitao.getEquipe().getCapitao().getIdUsuario().equals(capitaoId)) {
+            throw new Exception("Apenas o capitão pode enviar convites.");
+        }
+
+        // 2. Buscar o usuário convidado
+        Usuario convidado = usuarioRepository.findByNickname(nicknameConvidado)
+                .orElseThrow(() -> new Exception("Jogador com este nickname não encontrado."));
+
+        // 3. Validações de Regra de Negócio
+        if (convidado.getEquipe() != null) {
+            throw new Exception("Este jogador já está em uma equipe.");
+        }
+
+        // --- PONTO DE DECISÃO ---
+        // Aqui você tem duas opções:
+        // A) Criar um registro na tabela 'Convite' (Recomendado para histórico)
+        // B) Adicionar direto (Não recomendado, pois o jogador não aceitou ainda)
+        
+        // Exemplo da lógica A (imaginando que você criará um ConviteRepository):
+        /*
+        Convite novoConvite = new Convite();
+        novoConvite.setEquipe(capitao.getEquipe());
+        novoConvite.setConvidado(convidado);
+        novoConvite.setStatus("PENDENTE");
+        conviteRepository.save(novoConvite);
+        */
+        
+        System.out.println("Convite enviado para " + convidado.getEmail()); 
+    }
+
+	public Optional<Equipe> buscarPerfilEquipePorUsuarioId(Long usuarioId) {
+	    // Busca o usuário, se existir, mapeia para pegar a equipe dele
+	    return usuarioRepository.findById(usuarioId)
+	            .map(Usuario::getEquipe);
+	}
+
+	@Transactional
+	public Equipe aceitarConvite(Long usuarioId) throws Exception {
+	    // 1. Buscar o usuário
+	    Usuario usuario = usuarioRepository.findById(usuarioId)
+	            .orElseThrow(() -> new Exception("Usuário não encontrado."));
+
+	    // 2. Buscar se existe convite pendente para ele
+	    // (Isso requereria um ConviteRepository)
+	    /*
+	    Convite convite = conviteRepository.buscarConvitePendentePorUsuario(usuarioId)
+	            .orElseThrow(() -> new Exception("Você não tem convites pendentes."));
+	    
+	    Equipe equipe = convite.getEquipe();
+	    */
+
+	    // 3. Adicionar o usuário na equipe
+	    // usuario.setEquipe(equipe);
+	    // usuarioRepository.save(usuario);
+
+	    // 4. Baixar o convite (Mudar status para ACEITO ou deletar)
+	    // convite.setStatus("ACEITO");
+	    // conviteRepository.save(convite);
+
+	    // return equipe;
+	    return null; // Placeholder até criar a entidade Convite
+	}
 }

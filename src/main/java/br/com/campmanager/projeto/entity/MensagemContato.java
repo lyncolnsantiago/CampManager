@@ -43,5 +43,40 @@ public class MensagemContato {
 
     // Status para rastreamento (ex: PENDENTE, EM_ANDAMENTO, RESOLVIDO)
     @Column(name = "status", length = 50, nullable = false)
-    private String status = "PENDENTE"; 
+    private String status = "PENDENTE";
+
+	public void setNome(Object nome2) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setEmail(Object email2) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setTelefone(Object telefone2) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setMensagem(Object mensagem2) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setDataEnvio(LocalDateTime now) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setStatus(String string) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public String getId() {
+		// TODO Auto-generated method stub
+		return null;
+	} 
 }

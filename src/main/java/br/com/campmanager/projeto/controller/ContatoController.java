@@ -8,6 +8,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.campmanager.projeto.dto.ContatoRequest;
+import br.com.campmanager.projeto.entity.MensagemContato;
+import br.com.campmanager.projeto.service.ContatoService;
+
 @RestController
 @RequestMapping("/api/v1/contato") // Rota base: http://localhost:8080/api/v1/contato
 public class ContatoController {

@@ -38,6 +38,26 @@ public class ContatoRequest {
     @Size(max = 1000, message = "A mensagem deve ter no máximo 1000 caracteres.")
     private String mensagem;
 
+	public Object getNome() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Object getEmail() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Object getTelefone() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Object getMensagem() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
     // Observação: Não incluímos a data/hora ou o status, pois isso será gerado no
     // Service/Entidade.
 }

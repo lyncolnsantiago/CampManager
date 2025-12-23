@@ -25,5 +25,20 @@ public class UsuarioUpdateRequest {
     @Email(message = "O formato do email é inválido.")
     private String email;
 
+	public String getEmail() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getNickname() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getNomeCompleto() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
     // Não incluir senha neste DTO!
 }

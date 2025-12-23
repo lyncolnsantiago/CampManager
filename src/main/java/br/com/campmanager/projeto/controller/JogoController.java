@@ -1,62 +1,65 @@
 package br.com.campmanager.projeto.controller;
 
 import br.com.campmanager.projeto.entity.Jogo;
-import br.com.campmanager.projeto.enums.StatusCampeonato; // Import do Enum
 import br.com.campmanager.projeto.repositories.JogoRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller; // Import correto para web
-import org.springframework.ui.Model;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@Controller 
+import java.util.List;
+
+@RestController
 @RequestMapping("/jogos")
 public class JogoController {
 
     @Autowired
-    private JogoRepository repository;
+    private JogoRepository jogoRepository;
 
-    // 1. Listar (GET /jogos)
+    // 1. Listar todos
     @GetMapping
-    public String listar(Model model) {
-        // Manda a lista de jogos para o HTML "index.html"
-        model.addAttribute("listaJogos", repository.findAll());
-        return "jogos/index"; 
+    public List<Jogo> listarTodos() {
+        return jogoRepository.findAll();
     }
 
-    // 2. Abrir Formulário de Novo Jogo (GET /jogos/novo)
-    @GetMapping("/novo")
-    public String novo(Model model) {
-        model.addAttribute("jogo", new Jogo());
-        // Envia os Status (Enum) para preencher o <select> no HTML
-        model.addAttribute("listaStatus", StatusCampeonato.values());
-        return "jogos/form";
+    // 2. Buscar por ID
+    @GetMapping("/{id}")
+    public ResponseEntity<Jogo> buscarPorId(@PathVariable Long id) {
+        return jogoRepository.findById(id)
+                .map(jogo -> ResponseEntity.ok().body(jogo))
+                .orElse(ResponseEntity.notFound().build());
     }
 
-    // 3. Salvar o Jogo (POST /jogos/salvar)
-    @PostMapping("/salvar")
-    public String salvar(@ModelAttribute Jogo jogo) {
-        // @ModelAttribute pega os dados do form HTML
-        repository.save(jogo);
-        return "redirect:/jogos"; // Recarrega a página da lista
+    // 3. Criar jogo
+    @PostMapping
+    public Jogo criarJogo(@RequestBody Jogo jogo) {
+        return jogoRepository.save(jogo);
     }
 
-    // 4. Excluir (GET /jogos/deletar/{id})
-    @GetMapping("/deletar/{id}")
-    public String deletar(@PathVariable Long id) {
-        repository.deleteById(id);
-        return "redirect:/jogos";
+    // 4. Atualizar jogo
+    @PutMapping("/{id}")
+    public ResponseEntity<Jogo> atualizarJogo(@PathVariable Long id, @RequestBody Jogo jogoDetalhes) {
+        return jogoRepository.findById(id)
+                .map(jogoExistente -> {
+                    // Atualiza os dados com o que veio no corpo da requisição
+                    jogoExistente.setTimeCasa(jogoDetalhes.getTimeCasa());
+                    jogoExistente.setTimeVisitante(jogoDetalhes.getTimeVisitante());
+                    jogoExistente.setPlacarCasa(jogoDetalhes.getPlacarCasa());
+                    jogoExistente.setPlacarVisitante(jogoDetalhes.getPlacarVisitante());
+
+                    br.com.campmanager.projeto.entity.Jogo atualizado = jogoRepository.save(jogoExistente);
+                    return ResponseEntity.ok().body(atualizado);
+                })
+                .orElse(ResponseEntity.notFound().build());
     }
-    
-    // 5. Editar (GET /jogos/editar/{id})
-    @GetMapping("/editar/{id}")
-    public String editar(@PathVariable Long id, Model model) {
-        Jogo jogo = repository.findById(id).orElse(null);
-        
-        if(jogo != null){
-            model.addAttribute("jogo", jogo);
-            model.addAttribute("listaStatus", StatusCampeonato.values());
-            return "jogos/form";
+
+    // 5. Deletar jogo
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarJogo(@PathVariable Long id) {
+        if (jogoRepository.existsById(id)) {
+            jogoRepository.deleteById(id);
+            return ResponseEntity.noContent().build();
         }
-        return "redirect:/jogos";
+        return ResponseEntity.notFound().build();
     }
 }

@@ -61,8 +61,7 @@ public class Equipe {
     @Column(length = 50, nullable = false)
     private String status = "ATIVA";
 
-	public Equipe(Long idEquipe, String nomeEquipe, String tagGuilda, Usuario capitao, List<Usuario> membros,
-			LocalDateTime dataCriacao, String status) {
+	public Equipe() {
 		this.idEquipe = idEquipe;
 		this.nomeEquipe = nomeEquipe;
 		this.tagGuilda = tagGuilda;

@@ -9,11 +9,9 @@ import br.com.campmanager.projeto.entity.Usuario;
 import br.com.campmanager.projeto.exception.BusinessException;
 import br.com.campmanager.projeto.service.EquipeService;
 import jakarta.validation.Valid;
-
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -48,15 +46,15 @@ public class EquipeController {
     @PostMapping("/criar")
     public ResponseEntity<EquipeResponse> criarEquipe(
             @Valid @RequestBody CriarEquipeRequest request,
-            Authentication authentication) {
+            Authentication authentication) throws Exception {
         try {
             Long capitaoId = getAuthenticatedUserId(authentication);
-            Equipe novaEquipe = equipeService.criarEquipe(request, capitaoId);
+            Equipe novaEquipe = equipeService.criarNovaEquipe(request, capitaoId);
 
             return ResponseEntity.status(HttpStatus.CREATED).body(EquipeResponse.fromEntity(novaEquipe));
         } catch (BusinessException e) {
             // Retorna 400 Bad Request em caso de erro de regra de negócio
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new EquipeResponse(e.getMessage()));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new EquipeResponse());
         }
     }
 
@@ -71,7 +69,7 @@ public class EquipeController {
         try {
             Long capitaoId = getAuthenticatedUserId(authentication);
 
-            equipeService.enviarConvite(capitaoId, request.getNicknameConvidado());
+            equipeService.enviarConvite(capitaoId, (String) request.getNicknameConvidado());
 
             return ResponseEntity.ok(
                     "Convite enviado com sucesso para " + request.getNicknameConvidado() + ". Ele precisa aceitar.");

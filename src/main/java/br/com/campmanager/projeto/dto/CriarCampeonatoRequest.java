@@ -30,4 +30,29 @@ public class CriarCampeonatoRequest {
 
     // Opcional
     private LocalDate dataFim;
+
+	public String getNome() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public FormatoCampeonato getFormato() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public LocalDate getDataFim() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public LocalDate getDataInicio() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Integer getMaxEquipes() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

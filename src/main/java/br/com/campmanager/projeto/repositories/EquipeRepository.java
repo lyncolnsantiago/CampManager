@@ -9,10 +9,12 @@ import java.util.Optional;
 
 @Repository
 public interface EquipeRepository extends JpaRepository<Equipe, Long> {
+    // ERRADO (causa o erro atual):
+    // Optional<Equipe> findByTag(String tag);
 
-    // Método para buscar a equipe pelo nome (para garantir unicidade no cadastro)
-    Optional<Equipe> findByNome(String nome);
-
-    // Método para buscar a equipe pela tag (também deve ser única)
-    Optional<Equipe> findByTag(String tag);
+    // CERTO (combina com o atributo private String tagGuilda;):
+    Optional<Equipe> findByTagGuilda(String tagGuilda);
+    
+    // O outro método parece estar certo se o atributo for 'nomeEquipe':
+    Optional<Equipe> findByNomeEquipe(String nomeEquipe); 
 }

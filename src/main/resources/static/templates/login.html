@@ -35,7 +35,7 @@
         /* Card de Login */
         .login-card {
             background-color: var(--cm-bg-secondary);
-            padding: 3rem;
+            padding: 0 3rem 1.5rem 3rem;
             width: 100%;
             max-width: 450px;
             border-radius: 12px;
@@ -44,7 +44,7 @@
             text-align: center;
         }
 
-        .logo-img { height: 80px; margin-bottom: 1rem; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.5)); }
+        .logo-img { filter: drop-shadow(0 2px 5px rgba(0,0,0,0.5)); }
         
         h2 {
             font-family: var(--font-gamer);
@@ -130,7 +130,7 @@
 <body>
 
     <div class="login-card">
-        <img src="images/logo-campmanager.png" alt="Logo" class="logo-img">
+        <img src="../image/logo.png" alt="Logo" class="logo-img">
         <h2>Área do Jogador</h2>
 
         <form id="loginForm" action="/login" method="POST">
@@ -151,7 +151,7 @@
             </button> 
 
             <div class="links">
-                <a href="#">Esqueci a senha</a> | <a href="/cadastro-usuario" style="color: var(--cm-gold); font-weight: bold;">Criar Conta</a>
+                <a href="#">Esqueci a senha</a> | <a href="cadastro.html" style="color: var(--cm-gold); font-weight: bold;">Criar Conta</a>
             </div>
         </form>
     </div>

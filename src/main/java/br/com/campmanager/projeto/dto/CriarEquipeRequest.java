@@ -33,6 +33,11 @@ public class CriarEquipeRequest {
 		return null;
 	}
 
+	public String getTagGuilda() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
     // O ID do Capitão: É opcional aqui se você estiver pegando o ID do usuário
     // autenticado.
     // No entanto, para fins de teste ou se for um formulário onde o capitão é

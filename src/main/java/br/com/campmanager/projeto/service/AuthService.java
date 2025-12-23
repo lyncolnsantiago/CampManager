@@ -3,14 +3,15 @@ package br.com.campmanager.projeto.service;
 // IMPORTS CORRETOS (Sem Tomcat!)
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication; 
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import br.com.campmanager.projeto.dto.CadastroRequest;
 import br.com.campmanager.projeto.dto.LoginRequest;
-import br.com.campmanager.projeto.dto.RegisterRequest;
 import br.com.campmanager.projeto.entity.Usuario;
 import br.com.campmanager.projeto.repositories.UsuarioRepository;
+import jakarta.validation.Valid;
 
 @Service
 public class AuthService {
@@ -27,7 +28,7 @@ public class AuthService {
         this.authenticationManager = authenticationManager;
     }
 
-    public Usuario register(RegisterRequest request) {
+    public Usuario register(@Valid CadastroRequest request) {
         if (usuarioRepository.findByEmail(request.getEmail()).isPresent()) {
             throw new RuntimeException("Email já cadastrado."); 
         }
@@ -39,7 +40,7 @@ public class AuthService {
 
         Usuario novoUsuario = new Usuario();
         novoUsuario.setEmail(request.getEmail());
-        novoUsuario.setNickname(request.getNickname());
+        novoUsuario.setNickname(request.getNome());
         novoUsuario.setSenhaHash(encryptedPassword); 
         
         return usuarioRepository.save(novoUsuario);
@@ -53,4 +54,9 @@ public class AuthService {
             )
         );
     }
+
+	public String autenticarEGerarToken(String email, String senha) {
+		
+		return null;
+	}
 }

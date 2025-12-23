@@ -18,4 +18,14 @@ public class ChangePasswordRequest {
     @NotBlank(message = "A nova senha é obrigatória.")
     @Size(min = 6, message = "A nova senha deve ter no mínimo 6 caracteres.")
     private String novaSenha;
+
+	public CharSequence getSenhaAtual() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public CharSequence getNovaSenha() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

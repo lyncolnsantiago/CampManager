@@ -7,6 +7,7 @@ import br.com.campmanager.projeto.dto.CriarCampeonatoRequest;
 import br.com.campmanager.projeto.entity.Campeonato;
 import br.com.campmanager.projeto.entity.Usuario;
 import br.com.campmanager.projeto.enums.StatusCampeonato;
+import br.com.campmanager.projeto.exception.BusinessException;
 import br.com.campmanager.projeto.repositories.CampeonatoRepository;
 import br.com.campmanager.projeto.repositories.UsuarioRepository;
 
@@ -14,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CampeonatoService {
+public class CampeonatoService{
 
     private final CampeonatoRepository campeonatoRepository;
     private final UsuarioRepository usuarioRepository;

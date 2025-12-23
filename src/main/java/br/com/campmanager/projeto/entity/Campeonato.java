@@ -64,6 +64,10 @@ public class Campeonato {
     )
     private Set<Equipe> equipesParticipantes = new HashSet<>();
 
+	public Campeonato() {
+
+	}
+	
 	public Campeonato(Long idCampeonato, String nome, StatusCampeonato status, FormatoCampeonato formato,
 			LocalDate dataInicio, LocalDate dataFim, Integer maxEquipes, String chaveamentoJson, Usuario criador,
 			Set<Equipe> equipesParticipantes) {
@@ -78,6 +82,8 @@ public class Campeonato {
 		this.criador = criador;
 		this.equipesParticipantes = equipesParticipantes;
 	}
+
+
 
 	public Long getIdCampeonato() {
 		return idCampeonato;

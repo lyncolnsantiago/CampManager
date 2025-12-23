@@ -15,12 +15,58 @@ public class Jogo {
     private String nome;
     private String desenvolvedora;
     private String modoPadrao;
+    private String timeCasa;
+    private String timeVisitante;
+    private String placarCasa;
+    private String placarVisitante;
     
 	public Jogo() {
+		
+	}
+
+	public Jogo(Long idJogo, String nome, String desenvolvedora, String modoPadrao, String timeCasa,
+			String timeVisitante, String placarCasa, String placarVisitante) {
+		super();
 		this.idJogo = idJogo;
 		this.nome = nome;
 		this.desenvolvedora = desenvolvedora;
 		this.modoPadrao = modoPadrao;
+		this.timeCasa = timeCasa;
+		this.timeVisitante = timeVisitante;
+		this.placarCasa = placarCasa;
+		this.placarVisitante = placarVisitante;
+	}
+
+	public String getTimeCasa() {
+		return timeCasa;
+	}
+
+	public void setTimeCasa(String timeCasa) {
+		this.timeCasa = timeCasa;
+	}
+
+	public String getTimeVisitante() {
+		return timeVisitante;
+	}
+
+	public void setTimeVisitante(String timeVisitante) {
+		this.timeVisitante = timeVisitante;
+	}
+
+	public String getPlacarCasa() {
+		return placarCasa;
+	}
+
+	public void setPlacarCasa(String placarCasa) {
+		this.placarCasa = placarCasa;
+	}
+
+	public String getPlacarVisitante() {
+		return placarVisitante;
+	}
+
+	public void setPlacarVisitante(String placarVisitante) {
+		this.placarVisitante = placarVisitante;
 	}
 
 	public Long getIdJogo() {
@@ -54,5 +100,7 @@ public class Jogo {
 	public void setModoPadrao(String modoPadrao) {
 		this.modoPadrao = modoPadrao;
 	}
+
+	
 	
 }

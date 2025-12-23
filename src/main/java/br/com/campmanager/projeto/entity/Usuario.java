@@ -225,4 +225,10 @@ public class Usuario implements UserDetails {
 		return serialVersionUID;
 	}
 
+	public boolean isPresent() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
 }

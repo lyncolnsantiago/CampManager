@@ -1,13 +1,15 @@
 package br.com.campmanager.projeto.service;
 
+
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import br.com.campmanager.projeto.dto.ChangePasswordRequest;
 import br.com.campmanager.projeto.dto.UsuarioUpdateRequest;
 import br.com.campmanager.projeto.entity.Usuario;
 import br.com.campmanager.projeto.exception.BusinessException;
-import br.com.campmanager.projeto.repository.UsuarioRepository;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import br.com.campmanager.projeto.repositories.UsuarioRepository;
 
 import java.util.Optional;
 
@@ -31,7 +33,7 @@ public class UsuarioService {
     }
 
     // Método de Login (JÁ EXISTENTE - Mantenha)
-    public Optional<Usuario> buscarPorEmail(String email) {
+    public Usuario buscarPorEmail(String email) {
         return usuarioRepository.findByEmail(email);
     }
 

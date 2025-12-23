@@ -1,15 +1,20 @@
 package br.com.campmanager.projeto.controller;
 
 
-import br.com.campmanager.projeto.exception.BusinessException;
-import br.com.campmanager.projeto.service.AuthService;
-import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import br.com.campmanager.projeto.dto.AuthRequest;
+import br.com.campmanager.projeto.dto.AuthResponse;
+import br.com.campmanager.projeto.dto.CadastroRequest;
+import br.com.campmanager.projeto.entity.Usuario;
+import br.com.campmanager.projeto.exception.BusinessException;
+import br.com.campmanager.projeto.service.AuthService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -27,7 +32,7 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@Valid @RequestBody CadastroRequest request) {
         try {
-            Long id = authService.registrar(request);
+            Usuario id = authService.register(request);
             return ResponseEntity.status(HttpStatus.CREATED).body("Usuário registrado com sucesso. ID: " + id);
         } catch (BusinessException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
